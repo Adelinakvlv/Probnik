@@ -6,49 +6,47 @@ import datetime
 import time
 import pygame
 
-t=0
+t = 0
 
-def set():
+def set_reminder():
     global t
-    rem=sd.askstring("Время напоминания", "Введите время напоминания в формате чч:мм (в 24ч. формате).")
-    #появляется строка с запросом ввода
+    rem = sd.askstring("Время напоминания", "Введите время напоминания в формате чч:мм (в 24ч. формате).")
+    # Проверка ввода времени
     if rem:
         try:
-            hour=int(rem.split(":")[0]) #Делим введенную строку по символу : и часы начинаются до дветочия
-            minute=int(rem.split(":")[1]) #Делим введенную строку по символу : и мин начинаются после дветочия
-            now=datetime.datetime.now()
-            print(now)
-            dt=now.replace(hour=hour, minute=minute)
-            print(dt)
-            t=dt.timestamp()
-            print(t)
+            hour = int(rem.split(":")[0])
+            minute = int(rem.split(":")[1])
+            now = datetime.datetime.now()
+            # Установка времени напоминания
+            dt = now.replace(hour=hour, minute=minute, second=0, microsecond=0)
+            t = dt.timestamp()
         except Exception as e:
-            mb.showerror("Ошибка!", f"Произошла ошибка {e}")
+            mb.showerror("Ошибка!", f"Произошла ошибка: {e}")
 
-
-def check():
+def check_reminder():
     global t
     if t:
-        now=time.time()
+        now = time.time()
         if now >= t:
             play_snd()
-            t=0
-    window.after(10000, check) #рекурсия - вызывает сама себя каждые 10 секунд (проверяет 6 раз в минуту)
+            t = 0  # Сбрасываем таймер после напоминания
+    window.after(10000, check_reminder)  # Проверка каждые 10 секунд
 
 def play_snd():
-    pygame.mixer.init()
-    pygame.mixer.music.load("reminder.mp3")
-    pygame.mixer.music.play()
+    pygame.mixer.init()  # Инициализация
+    pygame.mixer.music.load("reminder.mp3")  # Загрузка музыки
+    pygame.mixer.music.play()  # Воспроизведение музыки
 
+# Создание главного окна
 window = Tk()
 window.title("Напоминание")
 
-label=Label(text="Установите напоминание.")
+label = Label(text="Установите напоминание.")
 label.pack(pady=10)
-set_button=Button(text="Установить напоминание", command=set)
+set_button = Button(text="Установить напоминание", command=set_reminder)
 set_button.pack()
 
-window.mainloop()
+# Начало проверки напоминаний
+check_reminder()
 
-
-
+window.mainloop()  # Запуск основного цикла
