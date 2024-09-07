@@ -6,7 +6,10 @@ import datetime
 import time
 import pygame
 
+t=0
+
 def set():
+    global t
     rem=sd.askstring("Время напоминания", "Введите время напоминания в формате чч:мм (в 24ч. формате).")
     #появляется строка с запросом ввода
     if rem:
@@ -21,6 +24,17 @@ def set():
             print(t)
         except Exception as e:
             mb.showerror("Ошибка!", f"Произошла ошибка {e}")
+
+
+def check():
+    global t
+    if t:
+        now=time.time()
+        if now >= t:
+            play_snd()
+            t=0
+    window.after(10000, check) #рекурсия - вызывает сама себя каждые 10 секунд (проверяет 6 раз в минуту)
+
 
 
 window = Tk()
