@@ -35,7 +35,10 @@ def check():
             t=0
     window.after(10000, check) #рекурсия - вызывает сама себя каждые 10 секунд (проверяет 6 раз в минуту)
 
-
+def play_snd():
+    pygame.mixer.init()
+    pygame.mixer.music.load("reminder.mp3")
+    pygame.mixer.music.play()
 
 window = Tk()
 window.title("Напоминание")
