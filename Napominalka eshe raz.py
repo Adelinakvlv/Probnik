@@ -7,10 +7,11 @@ import time
 import pygame
 
 t = 0
+musis=False
 
 def set_reminder():
     global t
-    rem = sd.askstring("Время напоминания", "Введите время напоминания в формате чч:мм (в 24ч. формате).")
+    rem = sd.askstring("Время напоминания", "Введите время напоминашки в формате чч:мм (в 24ч. формате).")
     # Проверка ввода времени
     if rem:
         try:
@@ -33,21 +34,32 @@ def check_reminder():
     window.after(10000, check_reminder)  # Проверка каждые 10 секунд
 
 def play_snd():
+    global music
+    music=True
     pygame.mixer.init()  # Инициализация
     pygame.mixer.music.load("reminder.mp3")  # Загрузка музыки
     pygame.mixer.music.play()  # Воспроизведение музыки
 
-# Создание главного окна
+def stop_music():
+    global music
+    if music:
+        pygame.mixer.music.stop()
+        music=False
+    label.config(trxt"Установить новую напоминашку.")
+
+#Создание главного окна
 window = Tk()
 window.title("Напоминание")
 
 label = Label(text="Установите напоминание.", font=("Arial", 12))
 label.pack(pady=10)
-set_button = Button(text="Установить напоминание", command=set_reminder)
-set_button.pack()
+set_button = Button(text="Установить напоминашку!", command=set_reminder)
+set_button.pack(pady=10)
+
+stop_button = Button(text="Остановить музончик!", command=stop_music)
+stop_button.pack(pady=10)
 
 # Начало проверки напоминаний
 check_reminder()
-
 
 window.mainloop()  # Запуск основного цикла
