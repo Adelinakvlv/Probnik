@@ -45,7 +45,7 @@ def stop_music():
     if music:
         pygame.mixer.music.stop()
         music=False
-    label.config(trxt"Установить новую напоминашку.")
+    label.config(text="Установить новую напоминашку.")
 
 #Создание главного окна
 window = Tk()
