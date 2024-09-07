@@ -21,6 +21,7 @@ def set_reminder():
             # Установка времени напоминания
             dt = now.replace(hour=hour, minute=minute, second=0, microsecond=0)
             t = dt.timestamp()
+            label.config(text=f"Напоминание на {hour:02}:{minute:02}")
         except Exception as e:
             mb.showerror("Ошибка!", f"Произошла ошибка: {e}")
 
