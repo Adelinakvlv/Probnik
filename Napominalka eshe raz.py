@@ -41,7 +41,7 @@ def play_snd():
 window = Tk()
 window.title("Напоминание")
 
-label = Label(text="Установите напоминание.")
+label = Label(text="Установите напоминание.", font=("Arial", 12))
 label.pack(pady=10)
 set_button = Button(text="Установить напоминание", command=set_reminder)
 set_button.pack()
